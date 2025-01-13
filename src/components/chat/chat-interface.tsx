@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, ComponentPropsWithoutRef } from 'react';
 import { ChatMessage } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -117,10 +117,16 @@ const DiagramView = ({ diagram }: DiagramViewProps) => {
 
 const MarkdownContent = ({ content }: { content: string }) => {
   const components: Components = {
-    code({ node, inline, className, children, ...props }) {
+    code({
+      className,
+      children,
+      ...props
+    }: ComponentPropsWithoutRef<'code'> & { inline?: boolean }) {
       const match = /language-(\w+)/.exec(className || '');
+      const inline = props.inline;
       return !inline && match ? (
         <SyntaxHighlighter
+          // @ts-ignore
           style={oneDark}
           language={match[1]}
           PreTag='div'

@@ -145,11 +145,9 @@ export async function POST(req: Request) {
 
         for await (const chunk of completion) {
           const content = chunk.choices[0]?.delta?.content || '';
-          console.log('Stream chunk:', { content });
 
           if (content) {
             buffer += content;
-            console.log('Current buffer:', buffer);
 
             // Send the content chunk
             await writer.write(
@@ -171,7 +169,6 @@ export async function POST(req: Request) {
               if (tasksMatch && tasksMatch[1]) {
                 try {
                   const tasks = JSON.parse(tasksMatch[1].trim());
-                  console.log('Parsed tasks:', tasks);
                   // Send tasks with replaceAll flag to indicate this is a full task list
                   await writer.write(
                     encoder.encode(

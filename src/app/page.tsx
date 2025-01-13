@@ -254,7 +254,6 @@ For questions or issues, please contact support.`;
             if (line.startsWith('data: ')) {
               try {
                 const data = JSON.parse(line.slice(6));
-                console.log('Received data:', data);
 
                 if (data.type === 'content') {
                   // Update streaming message content
